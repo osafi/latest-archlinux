@@ -1,0 +1,5 @@
+---
+applications:
+- name: latest-archlinux
+  disk_quota: 256M
+  memory: 512M
