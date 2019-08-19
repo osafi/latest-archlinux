@@ -4,10 +4,10 @@ const x = Xray();
 
 type HandlerType = (
   err: Error,
-  result: { 
+  result: {
     release: string;
-    locations: string[]; 
-    urls: string[][] 
+    locations: string[];
+    urls: string[][];
   },
 ) => void;
 
@@ -19,9 +19,13 @@ export interface DownloadRegion {
 export type DownloadScraperFunction = () => Promise<DownloadRegion[]>;
 
 const downloadScraper: DownloadScraperFunction = () => {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     const handler: HandlerType = (_, result) => {
-      
+      if (!result || !result.release || !result.locations || !result.urls) {
+        reject(new Error('Failed to scrape archlinux downloads page'));
+        return;
+      }
+
       const version = result.release.replace(/Current Release:\ ?/, '');
       const isoName = `archlinux-${version}-x86_64.iso`;
 

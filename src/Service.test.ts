@@ -32,7 +32,7 @@ describe('Service', () => {
 
     await request(app)
       .get('/iso')
-      .query({region: 'united_states'})
+      .query({ region: 'united_states' })
       .expect(307)
       .expect('Location', 'http://usa.com/arch.iso');
   });
