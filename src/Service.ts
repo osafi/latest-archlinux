@@ -2,7 +2,7 @@ import express from 'express';
 
 import { DownloadScraperFunction } from './DownloadScraper';
 
-export default function(scraper: DownloadScraperFunction): Express.Application {
+export default function(scraper: DownloadScraperFunction): express.Express {
   const app = express();
 
   app.get('/iso', async (req, res, _next) => {
@@ -16,7 +16,11 @@ export default function(scraper: DownloadScraperFunction): Express.Application {
         r => r.location.toLowerCase() === requestedRegion.toLowerCase(),
       );
 
-      res.redirect(307, region!.urls[0]);
+      if (region) {
+        res.redirect(307, region.urls[0]);
+      } else {
+        res.status(404).end();
+      }
     } catch (err) {
       res.status(500).send({ message: 'Unable to fetch download URLs' });
     }

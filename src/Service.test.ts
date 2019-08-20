@@ -37,6 +37,17 @@ describe('Service', () => {
       .expect('Location', 'http://usa.com/arch.iso');
   });
 
+  it('returns 404 when no download URLs for requested region', async () => {
+    td.when(scraper()).thenResolve([
+      { location: 'Worldwide', urls: ['http://worldwide.com/arch.iso'] },
+    ]);
+
+    await request(subject)
+      .get('/iso')
+      .query({ region: 'united_states' })
+      .expect(404);
+  });
+
   it('returns 500 when scraper fails', async () => {
     td.when(scraper()).thenReject(new Error('scraper failed'));
 
