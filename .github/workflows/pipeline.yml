@@ -28,31 +28,3 @@ jobs:
         ORG: osafi
         SPACE: development
         APP_NAME: latest-archlinux
-
-  build:
-
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [10.x, 12.x]
-
-    steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: npm install and test
-      run: |
-        npm install
-        npm test
-    - name: Deploy to PWS
-      uses: louisthomas/cloud-foundry-cli-action@1.0.1
-      with:
-        secrets: ${{ secrets.PWS_PASS }}
-      env:
-        CF_API_ENDPOINT = "api.run.pivotal.io"
-        ORG = "osafi"
-        SPACE = "development"
-        USERNAME = ${{ secrets.PWS_USER }}
