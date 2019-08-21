@@ -21,3 +21,12 @@ jobs:
       run: |
         npm install
         npm test
+    - name: Deploy to PWS
+      uses: louisthomas/cloud-foundry-cli-action@1.0.1
+      with:
+        secrets: [${{ secrets.PWS_PASS }}]
+      env:
+        CF_API_ENDPOINT = "api.run.pivotal.io"
+        ORG = "osafi"
+        SPACE = "development"
+        USERNAME = ${{ secrets.PWS_USER }}
