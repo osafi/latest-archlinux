@@ -24,6 +24,6 @@ jobs:
         CF_API_ENDPOINT: api.run.pivotal.io
         USERNAME: ${{ secrets.PWS_USER }}
         PASSWORD: ${{ secrets.PWS_PASS }}
-        ORG: osafi
+        ORG: safi
         SPACE: development
         APP_NAME: latest-archlinux
