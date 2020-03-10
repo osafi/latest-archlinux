@@ -18,12 +18,10 @@ jobs:
       run: |
         yarn install
         yarn test
-    - name: Deploy to PWS
-      uses: louisthomas/cloud-foundry-cli-action@1.0.1
+    - name: Deploy to Heroku
       env:
-        CF_API_ENDPOINT: api.run.pivotal.io
-        USERNAME: ${{ secrets.PWS_USER }}
-        PASSWORD: ${{ secrets.PWS_PASS }}
-        ORG: safi
-        SPACE: development
-        APP_NAME: latest-archlinux
+        HEROKU_API_TOKEN: ${{ secrets.HEROKU_API_TOKEN }}
+        HEROKU_APP_NAME: "latest-archlinux"
+      if: github.ref == 'refs/heads/master' && job.status == 'success'
+      run: git push https://heroku:$HEROKU_API_TOKEN@git.heroku.com/$HEROKU_APP_NAME.git origin/master:master
+
