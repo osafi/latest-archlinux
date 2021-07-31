@@ -18,9 +18,7 @@ describe('DownloadScraper', () => {
     const archHtml = readFileSync(
       path.resolve(__dirname, 'testFixtures', 'archlinux-downloads.html'),
     ).toString();
-    nock('https://archlinux.org')
-      .get('/download')
-      .reply(200, archHtml);
+    nock('https://archlinux.org').get('/download').reply(200, archHtml);
 
     const results = await downloadScraper();
 
@@ -54,9 +52,7 @@ describe('DownloadScraper', () => {
   });
 
   it('handles error when no results', async () => {
-    nock('https://archlinux.org')
-      .get('/download')
-      .reply(500);
+    nock('https://archlinux.org').get('/download').reply(500);
 
     await expect(downloadScraper()).rejects.toThrowError(
       'Failed to scrape archlinux downloads page',

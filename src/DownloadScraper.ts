@@ -32,7 +32,7 @@ const downloadScraper: DownloadScraperFunction = () => {
       const final = result.locations.map((location, index) => {
         return {
           location: location.trim(),
-          urls: result.urls[index].map(base => url.resolve(base, isoName)),
+          urls: result.urls[index].map((base) => url.resolve(base, isoName)),
         };
       });
       resolve(final);
